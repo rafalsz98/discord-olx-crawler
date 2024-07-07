@@ -74,7 +74,12 @@ const getDateFromString = (string: string) => {
 };
 
 export const getSinglePageDescription = async (url: string) => {
-  const res = await axios.get(url);
+  const res = await axios.get(url, {
+    headers: {
+      "User-Agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+    },
+  });
   const root = parse(res.data);
   const rawData = root
     .querySelectorAll("script")
