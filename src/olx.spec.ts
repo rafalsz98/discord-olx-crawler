@@ -26,6 +26,11 @@ describe("olx", () => {
       );
       expect(res![0].date.hour()).toEqual(9);
       expect(res![0].date.minute()).toEqual(58);
+
+      const otodomOffer = res.find((el) => el.link.includes("otodom"));
+      expect(otodomOffer?.link).toEqual(
+        "https://www.otodom.pl/pl/oferta/36m2-2-pok-klimatyzacja-ul-pachonskiego-ID4qTqb.html",
+      );
     });
   });
 

@@ -25,7 +25,16 @@ export const parseIndexPage = async (url: string) => {
     const a = offer.querySelector("a");
     if (!a) return;
     const title = offer.querySelector("h6")?.innerText;
-    const link = `https://olx.pl${a.getAttribute("href")}`;
+    let link: string | undefined;
+
+    try {
+      link = new URL(a.getAttribute("href") as string).toString();
+    } catch {
+      link = new URL(
+        a.getAttribute("href") as string,
+        "https://olx.pl",
+      ).toString();
+    }
     if (!link || !title) return;
 
     // Time
