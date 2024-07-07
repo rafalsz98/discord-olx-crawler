@@ -10,7 +10,7 @@ let dates = [
 ] as ResultData[];
 
 jest.mock("./olx", () => ({
-  parsePage: jest.fn(async () => dates),
+  parseIndexPage: jest.fn(async () => dates),
 }));
 
 describe("comparer", () => {
