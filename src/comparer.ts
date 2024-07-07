@@ -6,7 +6,7 @@ let newestDate: Moment | null;
 
 export const init = async () => {
   const data = await parseIndexPage(process.env.URL as string);
-  if (data === undefined) throw "Init error";
+  if (data === undefined || data.length === 0) throw "Init error";
   newestDate = data[0].date;
 };
 
