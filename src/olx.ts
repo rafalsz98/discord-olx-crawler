@@ -1,4 +1,3 @@
-import axios from "axios";
 import moment, { Moment } from "moment";
 import { parse } from "node-html-parser";
 
@@ -12,8 +11,8 @@ export type ResultData = {
   Returns list of offers
 */
 export const parseIndexPage = async (url: string) => {
-  const res = await axios.get(url);
-  const root = parse(res.data);
+  const res = await fetch(url);
+  const root = parse(await res.text());
   const data = [] as ResultData[];
 
   const nonPremiumOffers = root.querySelectorAll(
@@ -24,7 +23,7 @@ export const parseIndexPage = async (url: string) => {
     // Title and link
     const a = offer.querySelector("a");
     if (!a) return;
-    const title = offer.querySelector("h6")?.innerText;
+    const title = offer.querySelector("h4")?.innerText;
     let link: string | undefined;
 
     try {
@@ -74,13 +73,13 @@ const getDateFromString = (string: string) => {
 };
 
 export const getSinglePageDescription = async (url: string) => {
-  const res = await axios.get(url, {
+  const res = await fetch(url, {
     headers: {
       "User-Agent":
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
     },
   });
-  const root = parse(res.data);
+  const root = parse(await res.text());
   const rawData = root
     .querySelectorAll("script")
     .find((s) => s.innerText.includes('"@type":"Product"'))?.innerText;

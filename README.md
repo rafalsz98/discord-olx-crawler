@@ -20,5 +20,9 @@ Then fill all the variables:
 - GUILD: ID of the Discord server
 - CHANNEL: ID of the channel to which send notifications
 
+Choose one of the following options to improve the bot:
+- GEMINI_API_KEY: https://aistudio.google.com/app/apikey, it is free
+- OPENAI_API_KEY: https://platform.openai.com/api-keys, it is paid
+if GEMINI_API_KEY and OPENAI_API_KEY are set, program will use Gemini API as default
 
 not perfect but works

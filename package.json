@@ -22,7 +22,7 @@
     "typescript": "^5.5.3"
   },
   "dependencies": {
-    "axios": "^0.26.0",
+    "@google/generative-ai": "^0.24.0",
     "dayjs": "^1.11.11",
     "discord.js": "^14.15.3",
     "dotenv": "^16.4.5",
