@@ -80,12 +80,27 @@ export const getSinglePageDescription = async (url: string) => {
     },
   });
   const root = parse(await res.text());
-  const rawData = root
-    .querySelectorAll("script")
-    .find((s) => s.innerText.includes('"@type":"Product"'))?.innerText;
+  let rawData;
+  if (url.includes("olx.pl")) {
+    rawData = root
+      .querySelectorAll("script")
+      .find((s) => s.innerText.includes('"@type":"Product"'))?.innerText;
+  } else if (url.includes("otodom.pl")) {
+    rawData = root
+      .querySelectorAll("script")
+      .find((s) => s.innerText.includes('pageProps'))
+      ?.innerText;
+  }
   if (!rawData) return;
 
   const data = JSON.parse(rawData);
+  let description = data.description;
 
-  return data.description as string | undefined;
+  if (url.includes("otodom.pl")) {
+    const raw = data.props.pageProps.ad.description;
+    const decodedDescription = decodeURIComponent(raw);
+    description = decodedDescription.replace(/<\/?[^>]+(>|$)/g, " ");
+  }
+
+  return description as string | undefined;
 };

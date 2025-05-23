@@ -4,6 +4,7 @@ import "dotenv/config";
 import * as comparer from "./comparer";
 import { getSinglePageDescription } from "./olx";
 import { getCompletionInfo } from "./openai";
+import { addLocationToDescription } from "./location";
 
 const client = new Client({ intents: "Guilds" });
 
@@ -39,6 +40,11 @@ client.on("ready", async () => {
             if (description) {
               aiCompletion = await getCompletionInfo(description);
             }
+
+            if (aiCompletion !== "Opis nieznaleziony") {
+              aiCompletion = addLocationToDescription(aiCompletion);
+            }
+
             const formattedDate = el.date.format("YYYY-MM-DD HH:mm");
             const formattedMessage = `Nowa oferta! 🔥\n[${formattedDate}] ${el.title}\n${el.link}\n\n\n${aiCompletion}`;
             channel.send(formattedMessage);

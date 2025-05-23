@@ -16,9 +16,9 @@ const getTemplate = (description: string) => `Na podstawie poniższego opisu:
 \`\`\`
 ${description}
 \`\`\`
-Czy to jest prawdziwa oferta? - Odpowiedz w formacie: 'Prawdopodobieństwo, że oferta jest prawdziwa \${procent}'
-W oddzielnym akapicie podaj wszystkie koszty jedno pod drugim. Jako ostatni punkt podaj sumę.
-W oddzielnym akapicie podaj najistotniejsze informacje o ofercie.
+W oddzielnym akapicie podaj lokalizację mieszkania do wynajęcia w formacie google maps. - Odpowiedz w formacie: 'Lokalizacja: \{{lokalizacja}}'.
+W oddzielnym akapicie podaj koszta miesięczne wynajmu mieszkania nie uwzględniając . - Odpowiedz w formacie: 'Koszt miesięczny: \{{koszt}}'.
+Stosuj się dokładnie do wymaganego formatu odpowiedzi.
 `;
 
 export async function getCompletionInfo(description: string) {
@@ -28,7 +28,7 @@ export async function getCompletionInfo(description: string) {
     if (useGemini && ai) {
       const model = ai.getGenerativeModel({ model: "gemini-2.0-flash" });
       const completion = await model.generateContent(getTemplate(description));
-      const response = await completion.response;
+      const response = completion.response;
       
       if (response.text()) {
         result = response.text();
